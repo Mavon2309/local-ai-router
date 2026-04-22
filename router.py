@@ -5,6 +5,7 @@ import re
 import time
 from datetime import datetime
 from config import MEMORY_FILE, STATS_FILE
+from semantic_router import semantic_classify
 
 # ==================================================
 # LOCAL AI ROUTER v3
@@ -169,48 +170,51 @@ def rule_classify(prompt):
     p = prompt.lower().strip()
 
     # =====================================
-    # 1. WRITING INTENT (highest priority)
-    # output request beats subject keywords
+    # 1. STRONG WRITING SIGNALS (very explicit)
     # =====================================
-    if contains_any(p, WRITING_WORDS):
-        return "writing", 95
+    if any(x in p for x in [
+        "write an email",
+        "draft an email",
+        "cover letter",
+        "rewrite this"
+    ]):
+        return "writing", 96
 
     # =====================================
-    # 2. REASONING INTENT
-    # compare / should / decision prompts
+    # 2. STRONG MATH SIGNALS (explicit solve tasks)
     # =====================================
-    if contains_any(p, REASONING_WORDS):
-        return "reasoning", 90
-
-    # Extra reasoning patterns
-    if " vs " in p or " versus " in p:
-        return "reasoning", 92
-
-    # =====================================
-    # 3. CODING INTENT
-    # explicit code / debug / build prompts
-    # =====================================
-    if contains_any(p, CODE_WORDS):
-        return "coding", 98
-
-    # =====================================
-    # 4. MATH INTENT
-    # explicit solve/calculus/algebra tasks
-    # =====================================
-    if contains_any(p, MATH_WORDS):
+    if any(x in p for x in [
+        "solve integral",
+        "differentiate",
+        "find eigenvalues",
+        "solve equation"
+    ]):
         return "math", 98
 
     # =====================================
-    # 5. Special conceptual logic prompts
+    # 3. STRONG CODING SIGNALS (clear intent)
     # =====================================
-    if "behind" in p:
-        return "reasoning", 90
+    if any(x in p for x in [
+        "debug",
+        "fix this code",
+        "error in code",
+        "stack trace"
+    ]):
+        return "coding", 98
 
     # =====================================
-    # No rule hit
+    # 4. STRONG REASONING SIGNALS
+    # =====================================
+    if any(x in p for x in [
+        "pros and cons",
+        "which is better"
+    ]):
+        return "reasoning", 92
+
+    # =====================================
+    # Otherwise → let semantic handle it
     # =====================================
     return None, 0
-
 # ---------------- AI CLASSIFIER ----------------
 
 def ai_classify(prompt):
@@ -275,47 +279,65 @@ Prompt: {prompt}
 def classify(prompt):
     p = prompt.lower().strip()
 
-    # 1. rules first
+    # =====================================
+    # 1. FAST RULES (only obvious wins)
+    # =====================================
     label, conf = rule_classify(p)
     if label:
         return label, conf, "rules"
 
-    # 2. simple factual prompts only
+    # =====================================
+    # 2. FACTUAL SHORTCUTS (cheap + fast)
+    # =====================================
     factual_starts = [
-    "what is", "what are",
-    "who is", "who was",
-    "define",
-    "explain",
-    "how does",
-    "tell me about"
-]
+        "what is", "what are",
+        "who is", "who was",
+        "define", "tell me about"
+    ]
 
     if any(p.startswith(x) for x in factual_starts):
         return "general", 96, "fact-rule"
 
-    # 3. special reasoning concepts
-    if "behind" in p:
-        return "reasoning", 90, "logic-rule"
+    # =====================================
+    # 3. SEMANTIC CLASSIFIER (MAIN ENGINE)
+    # =====================================
+    label, conf = semantic_classify(prompt)
 
-    if p.startswith("how does"):
-        return "general", 94, "fact-rule"
+    # =====================================
+    # 4. LOGIC OVERRIDES (fix known edge cases)
+    # =====================================
 
-    # 4. AI fallback
-    label, conf = ai_classify(prompt)
+    # comparisons → reasoning
+    if any(x in p for x in ["compare", " vs ", " versus ", "pros and cons"]):
+        return "reasoning", 92, "override"
 
-    # distrust random writing outputs
+    # opinion / judgment → reasoning
+    if p.startswith("should") or "should" in p:
+        return "reasoning", 92, "override"
+
+    # writing intent beats topic
+    if any(x in p for x in ["essay", "email", "rewrite", "draft"]):
+        return "writing", 95, "override"
+
+    # =====================================
+    # 5. SAFETY FILTERS
+    # =====================================
+
+    # prevent random writing hallucinations
     if label == "writing":
         if not any(x in p for x in [
-            "write", "email", "essay", "rewrite",
-            "cover letter", "draft"
+            "write", "email", "essay", "rewrite", "draft"
         ]):
             return "general", 60, "fallback"
 
-    if conf < 70:
+    # low confidence → fallback
+    if conf < 55:
         return "general", 50, "fallback"
 
-    return label, conf, "ai"
-
+    # =====================================
+    # FINAL
+    # =====================================
+    return label, conf, "semantic"
 # ---------------- COMMANDS ----------------
 
 def show_models():
