@@ -29,3 +29,11 @@ For same environment
 ```bash
 pip install -r requirements.txt
 ```
+
+### (First Time Only)
+
+To download the semantic model locally:
+
+```bash
+python -c "from sentence_transformers import SentenceTransformer; SentenceTransformer('all-MiniLM-L6-v2')"
+```
