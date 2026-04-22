@@ -11,6 +11,8 @@ RUN_DIR = os.path.join(TEST_DIR, "run_tests")
 # Files
 TEST_PROMPTS_V1 = os.path.join(PROMPTS_DIR, "test_prompts.json")
 TEST_PROMPTS_V2 = os.path.join(PROMPTS_DIR, "test_prompts_2.json")
+TEST_PROMPTS_V3 = os.path.join(PROMPTS_DIR, "test_prompts_3.json")
+
 
 MEMORY_FILE = os.path.join(ROOT_DIR, "memory.json")
 STATS_FILE = os.path.join(ROOT_DIR, "stats.json")

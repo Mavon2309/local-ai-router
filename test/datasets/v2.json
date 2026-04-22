@@ -1,0 +1,135 @@
+[
+  { "prompt": "What is photosynthesis?", "expected": "general" },
+  { "prompt": "Explain quantum computing simply", "expected": "general" },
+  { "prompt": "How does the internet work?", "expected": "general" },
+  { "prompt": "Tell me about black holes", "expected": "general" },
+  { "prompt": "What is inflation in economics?", "expected": "general" },
+  { "prompt": "Explain cloud computing", "expected": "general" },
+  { "prompt": "What does HTTP stand for?", "expected": "general" },
+  { "prompt": "How do airplanes fly?", "expected": "general" },
+
+  {
+    "prompt": "How does democracy function in practice?",
+    "expected": "general"
+  },
+  {
+    "prompt": "Explain how capitalism differs globally",
+    "expected": "general"
+  },
+
+  { "prompt": "Compute the derivative of x^2", "expected": "math" },
+  { "prompt": "Solve x^2 + 5x + 6 = 0", "expected": "math" },
+  {
+    "prompt": "Find the determinant of matrix [[1,2],[3,4]]",
+    "expected": "math"
+  },
+  {
+    "prompt": "Calculate probability of heads in 3 coin tosses",
+    "expected": "math"
+  },
+  { "prompt": "Use Bayes theorem to solve this problem", "expected": "math" },
+  { "prompt": "Evaluate integral of sin(x)", "expected": "math" },
+
+  { "prompt": "Explain why derivatives are useful", "expected": "reasoning" },
+  { "prompt": "When should you use Bayes theorem?", "expected": "reasoning" },
+
+  {
+    "prompt": "Write a Python function to reverse a string",
+    "expected": "coding"
+  },
+  { "prompt": "Build a REST API using Flask", "expected": "coding" },
+  { "prompt": "Fix this Java code error", "expected": "coding" },
+  { "prompt": "Create a SQL query to join two tables", "expected": "coding" },
+  { "prompt": "Write JavaScript to fetch API data", "expected": "coding" },
+
+  {
+    "prompt": "Which programming language is best for AI?",
+    "expected": "reasoning"
+  },
+  { "prompt": "Explain why Python is popular", "expected": "general" },
+
+  {
+    "prompt": "Write code to compute Fibonacci sequence",
+    "expected": "coding"
+  },
+  { "prompt": "Implement gradient descent in Python", "expected": "coding" },
+
+  { "prompt": "Write an email apologizing for delay", "expected": "writing" },
+  {
+    "prompt": "Draft a cover letter for data analyst role",
+    "expected": "writing"
+  },
+  { "prompt": "Rewrite this text professionally", "expected": "writing" },
+  {
+    "prompt": "Write a persuasive paragraph on climate change",
+    "expected": "writing"
+  },
+
+  { "prompt": "Explain climate change in a paragraph", "expected": "writing" },
+  { "prompt": "Summarize this article formally", "expected": "writing" },
+  {
+    "prompt": "Write documentation for a Python function",
+    "expected": "writing"
+  },
+
+  { "prompt": "Should college be free?", "expected": "reasoning" },
+  { "prompt": "Compare iOS vs Android", "expected": "reasoning" },
+  { "prompt": "What is the best way to learn math?", "expected": "reasoning" },
+  { "prompt": "Pros and cons of remote work", "expected": "reasoning" },
+
+  { "prompt": "Explain advantages of solar energy", "expected": "reasoning" },
+  { "prompt": "Why is exercise important?", "expected": "general" },
+
+  {
+    "prompt": "Should I use Python or Java for backend?",
+    "expected": "reasoning"
+  },
+
+  {
+    "prompt": "Write code to compare two lists efficiently",
+    "expected": "coding"
+  },
+  {
+    "prompt": "Explain code complexity in simple terms",
+    "expected": "general"
+  },
+  {
+    "prompt": "Write an essay comparing capitalism and socialism",
+    "expected": "writing"
+  },
+  { "prompt": "Build a model to predict stock prices", "expected": "coding" },
+  {
+    "prompt": "Should machine learning models be trusted?",
+    "expected": "reasoning"
+  },
+
+  { "prompt": "help me with my homework", "expected": "general" },
+  { "prompt": "i need help coding something", "expected": "coding" },
+  { "prompt": "can you explain this to me", "expected": "general" },
+  { "prompt": "what should i do", "expected": "reasoning" },
+
+  { "prompt": "write python essay about recursion", "expected": "writing" },
+  { "prompt": "build explanation of neural networks", "expected": "general" },
+  {
+    "prompt": "compare code performance of two algorithms",
+    "expected": "reasoning"
+  },
+  { "prompt": "solve code problem using derivatives", "expected": "coding" },
+
+  {
+    "prompt": "I am trying to decide whether I should learn Python or Java for backend development, considering job prospects and ease of learning",
+    "expected": "reasoning"
+  },
+  {
+    "prompt": "Can you write a Python script that reads a CSV file and outputs summary statistics like mean and median",
+    "expected": "coding"
+  },
+  {
+    "prompt": "Explain in detail how neural networks use gradients and backpropagation",
+    "expected": "general"
+  },
+  {
+    "prompt": "Write a detailed essay explaining why artificial intelligence is transforming industries",
+    "expected": "writing"
+  }
+]
