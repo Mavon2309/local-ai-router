@@ -287,7 +287,7 @@ def classify(prompt):
         return label, conf, "rules"
 
     # =====================================
-    # 2. FACTUAL SHORTCUTS (cheap + fast)
+    # 2. FACTUAL SHORTCUTS (smarter now)
     # =====================================
     factual_starts = [
         "what is", "what are",
@@ -296,7 +296,9 @@ def classify(prompt):
     ]
 
     if any(p.startswith(x) for x in factual_starts):
-        return "general", 96, "fact-rule"
+        # avoid misclassifying reasoning questions
+        if not any(x in p for x in ["best", "should", "compare"]):
+            return "general", 96, "fact-rule"
 
     # =====================================
     # 3. SEMANTIC CLASSIFIER (MAIN ENGINE)
@@ -304,39 +306,47 @@ def classify(prompt):
     label, conf = semantic_classify(prompt)
 
     # =====================================
-    # 4. LOGIC OVERRIDES (fix known edge cases)
+    # 4. BOOST LAYER (NEW 🔥)
     # =====================================
 
-    # comparisons → reasoning
-    if any(x in p for x in ["compare", " vs ", " versus ", "pros and cons"]):
-        return "reasoning", 92, "override"
+    # coding boost
+    if any(x in p for x in ["build", "script", "code", "sql", "program"]):
+        if label == "general":
+            return "coding", 85, "boost"
 
-    # opinion / judgment → reasoning
-    if p.startswith("should") or "should" in p:
-        return "reasoning", 92, "override"
+    # math boost
+    if any(x in p for x in ["solve", "integral", "derivative", "equation"]):
+        if label == "general":
+            return "math", 85, "boost"
 
-    # writing intent beats topic
-    if any(x in p for x in ["essay", "email", "rewrite", "draft"]):
-        return "writing", 95, "override"
+    # writing boost
+    if any(x in p for x in ["essay", "email", "rewrite", "paragraph", "draft"]):
+        return "writing", 90, "boost"
+
+    # reasoning boost
+    if any(x in p for x in ["compare", " vs ", "should", "best", "pros and cons"]):
+        return "reasoning", 90, "boost"
 
     # =====================================
     # 5. SAFETY FILTERS
     # =====================================
 
-    # prevent random writing hallucinations
     if label == "writing":
         if not any(x in p for x in [
             "write", "email", "essay", "rewrite", "draft"
         ]):
             return "general", 60, "fallback"
 
-    # low confidence → fallback
-    if conf < 55:
+    # =====================================
+    # 6. CONFIDENCE HANDLING (FINAL)
+    # =====================================
+
+    if conf < 35:
         return "general", 50, "fallback"
 
-    # =====================================
-    # FINAL
-    # =====================================
+    if conf < 55:
+        return label, conf, "semantic-low"
+
     return label, conf, "semantic"
 # ---------------- COMMANDS ----------------
 
