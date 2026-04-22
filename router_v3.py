@@ -253,9 +253,13 @@ def classify(prompt):
 
     # 2. simple factual prompts only
     factual_starts = [
-        "what is", "what are", "who is", "who was",
-        "define", "tell me about"
-    ]
+    "what is", "what are",
+    "who is", "who was",
+    "define",
+    "explain",
+    "how does",
+    "tell me about"
+]
 
     if any(p.startswith(x) for x in factual_starts):
         return "general", 96, "fact-rule"
