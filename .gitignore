@@ -1,0 +1,20 @@
+﻿__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.tmp
+*.bak
+.venv/
+venv/
+env/
+.idea/
+.vscode/settings.json
+
+# local runtime data
+memory.json
+stats.json
+
+# OS files
+.DS_Store
+Thumbs.db

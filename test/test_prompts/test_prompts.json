@@ -1,0 +1,27 @@
+[
+  { "prompt": "What causes seasons on Earth?", "expected": "general" },
+  { "prompt": "Who was Nikola Tesla?", "expected": "general" },
+  { "prompt": "Explain blockchain in simple terms.", "expected": "general" },
+
+  { "prompt": "Solve integral of x^2 sin(x)", "expected": "math" },
+  { "prompt": "Differentiate x^3 ln(x)", "expected": "math" },
+  { "prompt": "Find eigenvalues of matrix [[2,1],[1,2]]", "expected": "math" },
+
+  { "prompt": "Build a python snake game", "expected": "coding" },
+  { "prompt": "Debug this JavaScript fetch request", "expected": "coding" },
+  { "prompt": "Write a Python script to rename files", "expected": "coding" },
+
+  { "prompt": "Write a professional apology email", "expected": "writing" },
+  { "prompt": "Rewrite this paragraph professionally", "expected": "writing" },
+  { "prompt": "Draft a LinkedIn post about leadership", "expected": "writing" },
+
+  {
+    "prompt": "Should democracy require compulsory voting?",
+    "expected": "reasoning"
+  },
+  { "prompt": "Compare renting vs buying a house", "expected": "reasoning" },
+  {
+    "prompt": "What is the best strategy to learn coding?",
+    "expected": "reasoning"
+  }
+]

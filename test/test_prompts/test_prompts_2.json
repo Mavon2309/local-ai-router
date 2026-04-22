@@ -1,0 +1,70 @@
+[
+  { "prompt": "What causes seasons on Earth?", "expected": "general" },
+  { "prompt": "Who was Nikola Tesla?", "expected": "general" },
+  { "prompt": "Explain blockchain in simple terms.", "expected": "general" },
+  { "prompt": "Define entropy for beginners.", "expected": "general" },
+
+  { "prompt": "Solve integral of x^2 sin(x)", "expected": "math" },
+  { "prompt": "Differentiate x^3 ln(x)", "expected": "math" },
+  { "prompt": "Find eigenvalues of matrix [[2,1],[1,2]]", "expected": "math" },
+  {
+    "prompt": "Solve this probability problem with Bayes theorem.",
+    "expected": "math"
+  },
+
+  { "prompt": "Build a python snake game", "expected": "coding" },
+  { "prompt": "Debug this JavaScript fetch request", "expected": "coding" },
+  { "prompt": "Write a Python script to rename files", "expected": "coding" },
+  {
+    "prompt": "Create SQL query to find duplicate users",
+    "expected": "coding"
+  },
+
+  { "prompt": "Write a professional apology email", "expected": "writing" },
+  { "prompt": "Rewrite this paragraph professionally", "expected": "writing" },
+  { "prompt": "Draft a LinkedIn post about leadership", "expected": "writing" },
+  {
+    "prompt": "Write a cover letter for software internship",
+    "expected": "writing"
+  },
+
+  {
+    "prompt": "Should democracy require compulsory voting?",
+    "expected": "reasoning"
+  },
+  { "prompt": "Compare renting vs buying a house", "expected": "reasoning" },
+  {
+    "prompt": "What is the best strategy to learn coding?",
+    "expected": "reasoning"
+  },
+  { "prompt": "Pros and cons of remote work", "expected": "reasoning" },
+
+  {
+    "prompt": "Write Python code that solves a quadratic equation",
+    "expected": "coding"
+  },
+  {
+    "prompt": "Explain Tesla's impact in one persuasive paragraph",
+    "expected": "writing"
+  },
+  {
+    "prompt": "Compare Python vs Java for data science",
+    "expected": "reasoning"
+  },
+  {
+    "prompt": "Draft an email declining a coding interview",
+    "expected": "writing"
+  },
+  { "prompt": "Should AI-generated code be trusted?", "expected": "reasoning" },
+  {
+    "prompt": "Explain the math behind neural networks",
+    "expected": "reasoning"
+  },
+  {
+    "prompt": "Build code to calculate derivatives symbolically",
+    "expected": "coding"
+  },
+  { "prompt": "Write an essay on why calculus matters", "expected": "writing" },
+  { "prompt": "How does DNS work?", "expected": "general" },
+  { "prompt": "Help me with this project", "expected": "general" }
+]
