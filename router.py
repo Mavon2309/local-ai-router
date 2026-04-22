@@ -309,10 +309,9 @@ def classify(prompt):
     # 4. BOOST LAYER (NEW 🔥)
     # =====================================
 
-    # coding boost
-    if any(x in p for x in ["build", "script", "code", "sql", "program"]):
-        if label == "general":
-            return "coding", 85, "boost"
+    # coding boost (STRONGER)
+    if any(x in p for x in ["build", "code", "script", "sql", "program"]):
+        return "coding", 90, "boost"
 
     # math boost
     if any(x in p for x in ["solve", "integral", "derivative", "equation"]):
