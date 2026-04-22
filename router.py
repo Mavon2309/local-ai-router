@@ -309,18 +309,23 @@ def classify(prompt):
     # 4. BOOST LAYER (NEW 🔥)
     # =====================================
 
-    # coding boost (STRONGER)
-    if any(x in p for x in ["build", "code", "script", "sql", "program"]):
-        return "coding", 90, "boost"
+    # =====================================
+    # WRITING FIRST (highest priority)
+    # =====================================
+    if any(x in p for x in ["essay", "email", "paragraph", "rewrite", "draft"]):
+        return "writing", 90, "boost"
+
+    # =====================================
+    # CODING (ACTION + OBJECT)
+    # =====================================
+    if any(x in p for x in ["build", "write", "create"]):
+        if any(y in p for y in ["code", "script", "program", "sql", "python", "java", "javascript"]):
+            return "coding", 90, "boost"
 
     # math boost
     if any(x in p for x in ["solve", "integral", "derivative", "equation"]):
         if label == "general":
             return "math", 85, "boost"
-
-    # writing boost
-    if any(x in p for x in ["essay", "email", "rewrite", "paragraph", "draft"]):
-        return "writing", 90, "boost"
 
     # reasoning boost
     if any(x in p for x in ["compare", " vs ", "should", "best", "pros and cons"]):
