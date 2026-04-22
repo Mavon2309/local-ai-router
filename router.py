@@ -322,8 +322,10 @@ def classify(prompt):
         if any(y in p for y in ["code", "script", "program", "sql", "python", "java", "javascript"]):
             return "coding", 90, "boost"
 
-    # math boost
-    if any(x in p for x in ["solve", "integral", "derivative", "equation"]):
+    if any(x in p for x in [
+    "solve", "integral", "derivative",
+    "equation", "probability", "bayes"
+    ]):
         if label == "general":
             return "math", 85, "boost"
 
