@@ -11,7 +11,7 @@ Built for a very basic laptop with very basic user specs, models can be updated 
 ## 🔧 Features
 
 - 🧠 Smart prompt classification (coding, math, reasoning, writing, general, rag)
-- ⚡ Fast rule-based routing (near 0ms for most prompts)
+- ⚡ Fast rule-based routing (near 0ms for most prompts if you can prompt engineer to include certain phrases)
 - 🤖 AI fallback classifier for ambiguous queries
 - 📊 Benchmark test suite with accuracy + latency tracking
 - 📈 Performance dashboard (route distribution, timing, confusion matrix)
