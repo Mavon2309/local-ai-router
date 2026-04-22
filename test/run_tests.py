@@ -1,12 +1,16 @@
+import os
+import sys
 import json
 import time
-import os
 from collections import Counter, defaultdict
 from datetime import datetime
 
+# FIX PATH
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(BASE_DIR)
+
 from router import classify
 from config import get_dataset_path, DEFAULT_DATASET, RESULTS_DIR
-
 
 # =====================================
 # LOAD TESTS

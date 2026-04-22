@@ -1,0 +1,3 @@
+Dataset: v3
+Accuracy: 96.67%
+Total: 30

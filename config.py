@@ -1,18 +1,32 @@
 import os
 
-# Root project folder (folder containing this file)
+# =====================================
+# ROOT
+# =====================================
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 
-# Common folders
+# =====================================
+# TESTING SYSTEM
+# =====================================
 TEST_DIR = os.path.join(ROOT_DIR, "test")
-PROMPTS_DIR = os.path.join(TEST_DIR, "test_prompts")
-RUN_DIR = os.path.join(TEST_DIR, "run_tests")
+DATASETS_DIR = os.path.join(TEST_DIR, "datasets")
+RESULTS_DIR = os.path.join(TEST_DIR, "results")
 
-# Files
-TEST_PROMPTS_V1 = os.path.join(PROMPTS_DIR, "test_prompts.json")
-TEST_PROMPTS_V2 = os.path.join(PROMPTS_DIR, "test_prompts_2.json")
-TEST_PROMPTS_V3 = os.path.join(PROMPTS_DIR, "test_prompts_3.json")
+# default dataset
+DEFAULT_DATASET = "v3"
 
 
+def get_dataset_path(name=None):
+    """
+    Returns full path to dataset JSON.
+    Example: get_dataset_path("v3") → test/datasets/v3.json
+    """
+    name = name or DEFAULT_DATASET
+    return os.path.join(DATASETS_DIR, f"{name}.json")
+
+
+# =====================================
+# CORE FILES
+# =====================================
 MEMORY_FILE = os.path.join(ROOT_DIR, "memory.json")
 STATS_FILE = os.path.join(ROOT_DIR, "stats.json")
