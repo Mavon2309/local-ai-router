@@ -12,7 +12,7 @@ sys.path.append(BASE_DIR)
 from config import TEST_PROMPTS_V2
 
 # Router import
-from router_v3 import classify
+from router import classify
 
 
 def run_tests():

@@ -12,7 +12,7 @@ sys.path.append(BASE_DIR)
 from config import TEST_PROMPTS_V2
 
 # Router imports
-from router_v3 import classify, ROUTES
+from router import classify, ROUTES
 
 # Shared prompts file path
 PROMPTS_FILE = TEST_PROMPTS_V2

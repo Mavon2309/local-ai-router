@@ -7,7 +7,7 @@ BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 sys.path.append(BASE_DIR)
 
 from config import TEST_PROMPTS_V1
-from router_v3 import classify
+from router import classify
 
 # Centralized prompts file from config.py
 PROMPTS_FILE = TEST_PROMPTS_V1

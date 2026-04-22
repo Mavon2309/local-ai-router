@@ -166,20 +166,49 @@ def contains_any(text, words):
     return any(w in text for w in words)
 
 def rule_classify(prompt):
-    p = prompt.lower()
+    p = prompt.lower().strip()
 
-    if contains_any(p, CODE_WORDS):
-        return "coding", 98
-
-    if contains_any(p, MATH_WORDS):
-        return "math", 98
-
+    # =====================================
+    # 1. WRITING INTENT (highest priority)
+    # output request beats subject keywords
+    # =====================================
     if contains_any(p, WRITING_WORDS):
         return "writing", 95
 
+    # =====================================
+    # 2. REASONING INTENT
+    # compare / should / decision prompts
+    # =====================================
     if contains_any(p, REASONING_WORDS):
         return "reasoning", 90
 
+    # Extra reasoning patterns
+    if " vs " in p or " versus " in p:
+        return "reasoning", 92
+
+    # =====================================
+    # 3. CODING INTENT
+    # explicit code / debug / build prompts
+    # =====================================
+    if contains_any(p, CODE_WORDS):
+        return "coding", 98
+
+    # =====================================
+    # 4. MATH INTENT
+    # explicit solve/calculus/algebra tasks
+    # =====================================
+    if contains_any(p, MATH_WORDS):
+        return "math", 98
+
+    # =====================================
+    # 5. Special conceptual logic prompts
+    # =====================================
+    if "behind" in p:
+        return "reasoning", 90
+
+    # =====================================
+    # No rule hit
+    # =====================================
     return None, 0
 
 # ---------------- AI CLASSIFIER ----------------
