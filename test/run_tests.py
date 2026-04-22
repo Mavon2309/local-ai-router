@@ -2,21 +2,35 @@ import json
 import time
 import os
 from collections import Counter, defaultdict
+from datetime import datetime
+
 from router import classify
+from config import get_dataset_path, DEFAULT_DATASET, RESULTS_DIR
 
 
+# =====================================
+# LOAD TESTS
+# =====================================
 def load_tests(path):
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
 
 
-def evaluate(tests):
+# =====================================
+# EVALUATION CORE
+# =====================================
+def evaluate(tests, dataset_name):
     total = len(tests)
     correct = 0
     timings = []
 
     route_counter = Counter()
     confusion = defaultdict(lambda: defaultdict(int))
+    failures = []
+
+    print("=" * 70)
+    print(f"RUNNING DATASET: {dataset_name}")
+    print("=" * 70)
 
     for i, t in enumerate(tests, 1):
         prompt = t["prompt"]
@@ -31,8 +45,17 @@ def evaluate(tests):
         confusion[expected][label] += 1
 
         status = "PASS" if label == expected else "FAIL"
+
         if status == "PASS":
             correct += 1
+        else:
+            failures.append({
+                "prompt": prompt,
+                "expected": expected,
+                "actual": label,
+                "confidence": conf,
+                "source": source
+            })
 
         print(f"{i}. {status} | {elapsed} ms")
         print(f"Prompt:   {prompt}")
@@ -42,9 +65,13 @@ def evaluate(tests):
 
     accuracy = round((correct / total) * 100, 2)
 
-    print("=" * 60)
+    # =====================================
+    # SUMMARY
+    # =====================================
+    print("=" * 70)
     print("SUMMARY")
-    print("=" * 60)
+    print("=" * 70)
+
     print(f"Score: {correct}/{total} ({accuracy}%)")
     print(f"Avg time: {round(sum(timings)/len(timings),2)} ms")
     print(f"Min time: {min(timings)} ms")
@@ -63,24 +90,51 @@ def evaluate(tests):
         for pred in labels:
             row += f"{confusion[exp][pred]:12}"
         print(row)
-        
-    with open("test/results/latest.txt", "w") as f:
+
+    # =====================================
+    # SAVE RESULTS
+    # =====================================
+    os.makedirs(RESULTS_DIR, exist_ok=True)
+
+    timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+
+    # latest summary
+    with open(os.path.join(RESULTS_DIR, "latest.txt"), "w") as f:
+        f.write(f"Dataset: {dataset_name}\n")
         f.write(f"Accuracy: {accuracy}%\n")
+        f.write(f"Total: {total}\n")
+
+    # historical log
+    with open(os.path.join(RESULTS_DIR, f"run_{timestamp}.txt"), "w") as f:
+        f.write(f"Dataset: {dataset_name}\n")
+        f.write(f"Accuracy: {accuracy}%\n")
+        f.write(f"Total: {total}\n")
+
+    # failure log (VERY useful)
+    if failures:
+        with open(os.path.join(RESULTS_DIR, f"failures_{timestamp}.json"), "w") as f:
+            json.dump(failures, f, indent=2)
+
+    print("\nSaved results to:", RESULTS_DIR)
 
     return accuracy
 
 
+# =====================================
+# MAIN ENTRY
+# =====================================
 def main():
-    dataset = input("Enter dataset filename (e.g. v3.json): ").strip()
+    dataset = input(f"Dataset (default={DEFAULT_DATASET}): ").strip()
+    dataset = dataset if dataset else DEFAULT_DATASET
 
-    path = os.path.join("test", "datasets", dataset)
+    path = get_dataset_path(dataset)
 
     if not os.path.exists(path):
-        print("Dataset not found.")
+        print(f"Dataset not found: {path}")
         return
 
     tests = load_tests(path)
-    evaluate(tests)
+    evaluate(tests, dataset)
 
 
 if __name__ == "__main__":
