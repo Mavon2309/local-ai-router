@@ -21,3 +21,11 @@ Built for a very basic laptop with very basic user specs, models can be updated 
 ---
 
 ## 🏗️ Project Structure
+
+## Setup
+
+For same environment
+
+```bash
+pip install -r requirements.txt
+```
