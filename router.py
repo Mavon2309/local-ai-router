@@ -314,6 +314,10 @@ def classify(prompt):
     # =====================================
     if any(x in p for x in ["essay", "email", "paragraph", "rewrite", "draft"]):
         return "writing", 90, "boost"
+    
+    # conceptual reasoning
+    if "behind" in p:
+        return "reasoning", 88, "override"
 
     # =====================================
     # CODING (ACTION + OBJECT)
