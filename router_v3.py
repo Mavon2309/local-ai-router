@@ -246,30 +246,37 @@ Prompt: {prompt}
 def classify(prompt):
     p = prompt.lower().strip()
 
-    # 1. Hard keyword rules first
+    # 1. rules first
     label, conf = rule_classify(p)
-
     if label:
         return label, conf, "rules"
 
-    # 2. Factual/general question detection
+    # 2. simple factual prompts only
     factual_starts = [
-        "what is", "what are", "what causes",
-        "who is", "who was",
-        "when did", "where is", "where was",
-        "why does", "explain", "define",
-        "tell me about"
+        "what is", "what are", "who is", "who was",
+        "define", "tell me about"
     ]
 
     if any(p.startswith(x) for x in factual_starts):
         return "general", 96, "fact-rule"
 
-    # 3. AI classifier fallback
+    # 3. special reasoning concepts
+    if "behind" in p or "how does" in p:
+        return "reasoning", 90, "logic-rule"
+
+    # 4. AI fallback
     label, conf = ai_classify(prompt)
 
-    # 4. If classifier uncertain, default to general
-    if conf < LOW_CONFIDENCE_THRESHOLD:
-        return "general", 70, "lowconf-default"
+    # distrust random writing outputs
+    if label == "writing":
+        if not any(x in p for x in [
+            "write", "email", "essay", "rewrite",
+            "cover letter", "draft"
+        ]):
+            return "general", 60, "fallback"
+
+    if conf < 70:
+        return "general", 50, "fallback"
 
     return label, conf, "ai"
 
