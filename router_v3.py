@@ -261,8 +261,11 @@ def classify(prompt):
         return "general", 96, "fact-rule"
 
     # 3. special reasoning concepts
-    if "behind" in p or "how does" in p:
+    if "behind" in p:
         return "reasoning", 90, "logic-rule"
+
+    if p.startswith("how does"):
+        return "general", 94, "fact-rule"
 
     # 4. AI fallback
     label, conf = ai_classify(prompt)
