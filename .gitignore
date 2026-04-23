@@ -14,7 +14,12 @@ env/
 # local runtime data
 memory.json
 stats.json
+results
 
 # OS files
 .DS_Store
 Thumbs.db
+
+
+# test outputs
+test/results/
