@@ -306,6 +306,16 @@ def classify(prompt):
     label, conf = semantic_classify(prompt)
 
     # =====================================
+    # 3.5 AI CLASSIFIER (LOW CONFIDENCE FALLBACK)
+    # =====================================
+    if conf < 55:
+        ai_label, ai_conf = ai_classify(prompt)
+
+        # trust AI only if stronger
+        if ai_conf > conf:
+            return ai_label, ai_conf, "ai-fallback"
+
+    # =====================================
     # 4. BOOST LAYER (NEW 🔥)
     # =====================================
 
@@ -316,7 +326,12 @@ def classify(prompt):
         return "writing", 90, "boost"
     
     # conceptual reasoning
-    if "behind" in p:
+    if any(x in p for x in [
+        "reason behind",
+        "logic behind",
+        "idea behind",
+        "thinking behind"
+    ]):
         return "reasoning", 88, "override"
 
     # =====================================
