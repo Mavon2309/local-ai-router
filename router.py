@@ -1,21 +1,10 @@
-print("Start")
-
 import ollama
-print("2: ollama loaded")
-
 import json
-print("3: json")
-
 import os
-print("os")
 import re
-print("re")
 import time
-print("time")
 from datetime import datetime
-print("datetime")
 from config import MEMORY_FILE, STATS_FILE
-print("config")
 
 semantic_classify_fn = None
 
