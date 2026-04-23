@@ -1,11 +1,30 @@
+print("Start")
+
 import ollama
+print("2: ollama loaded")
+
 import json
+print("3: json")
+
 import os
+print("os")
 import re
+print("re")
 import time
+print("time")
 from datetime import datetime
+print("datetime")
 from config import MEMORY_FILE, STATS_FILE
-from semantic_router import semantic_classify
+print("config")
+
+semantic_classify_fn = None
+
+def get_semantic_classifier():
+    global semantic_classify_fn
+    if semantic_classify_fn is None:
+        from semantic_router import semantic_classify
+        semantic_classify_fn = semantic_classify
+    return semantic_classify_fn
 
 # ==================================================
 # LOCAL AI ROUTER v3
@@ -303,6 +322,7 @@ def classify(prompt):
     # =====================================
     # 3. SEMANTIC CLASSIFIER (MAIN ENGINE)
     # =====================================
+    semantic_classify = get_semantic_classifier()
     label, conf = semantic_classify(prompt)
 
     # =====================================

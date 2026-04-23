@@ -38,28 +38,41 @@ def get_intent_embeddings():
         model = get_model()
 
         INTENT_EXAMPLES = {
-            "coding": [
-                "write code", "build program", "debug script",
-                "create api", "fix bug", "develop software"
-            ],
-            "math": [
-                "solve equation", "calculate integral",
-                "derivative problem", "algebra", "probability",
-                "bayes theorem"
-            ],
-            "writing": [
-                "write email", "draft essay", "rewrite paragraph",
-                "cover letter", "formal writing"
-            ],
-            "reasoning": [
-                "compare options", "pros and cons",
-                "what is best", "should i", "decision making"
-            ],
-            "general": [
-                "what is", "explain", "define concept",
-                "how does it work"
-            ]
-        }
+        "coding": [
+            "write code", "build program", "debug script",
+            "create api", "fix bug", "develop software"
+        ],
+        "math": [
+            "solve equation", "calculate integral",
+            "derivative problem", "algebra", "probability",
+            "bayes theorem"
+        ],
+        "writing": [
+            "write email", "draft essay", "rewrite paragraph",
+            "cover letter", "formal writing"
+        ],
+        "reasoning": [
+            "compare options", "pros and cons",
+            "what is best", "should i", "decision making"
+        ],
+        "general": [
+            "what is", "explain", "define concept",
+            "how does it work"
+        ],
+
+        # ✅ ADD THIS BLOCK
+        "rag": [
+            "search documents",
+            "retrieve information from files",
+            "query knowledge base",
+            "look up data",
+            "find information in documents",
+            "semantic search",
+            "retrieve context",
+            "search pdf",
+            "search database"
+        ]
+}
 
         # Normalize embeddings for better cosine similarity
         INTENT_EMBEDDINGS = {
